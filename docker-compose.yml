@@ -1,0 +1,20 @@
+# Версия приложения
+version: "3.3"
+
+# Список сервисов
+services:
+    
+    # Иструкция для приложения Flask 
+    flask:
+        build: ./flask            # Директория приложения, для сборки 
+        container_name: flask     # имя контейнера
+        environment:              # передаем переменные среды
+            - APP_NAME=SuperPuperApplication
+        expose:                   # Указываем, каком порту мы слушаем сокет
+            - 8080
+
+    nginx:
+        build: ./nginx
+        container_name: nginx
+        ports:                   # Пробрасываем порт с хоста в контейнер
+            - "80:80"
