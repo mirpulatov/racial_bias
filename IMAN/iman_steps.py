@@ -12,7 +12,7 @@ from utils import zip_longest
 
 def pretraining_step(s_input, s_labels, t_input, model, optimizer, lambda_):
 
-  _, s_adopt_layers_out, s_scores = model(s_input, calc_scores=True)
+  _, s_adopt_layers_out, s_scores = model(s_input, s_labels, calc_scores=True)
 
   _, t_adopt_layers_out, _ = model(t_input, calc_scores=False)
 
@@ -157,7 +157,7 @@ def mi_adaptation_epoch(model, target_domain_scoring, s_loader, t_loader,
     s_input, s_labels = s_batch[0].to(device), s_batch[1].to(device)
     t_input, t_labels = t_batch[0].to(device), t_batch[1].to(device)
 
-    _, s_adopt_layers_out, s_scores = model(s_input, calc_scores=True)
+    _, s_adopt_layers_out, s_scores = model(s_input, s_labels, calc_scores=True)
 
     t_embeddings, t_adopt_layers_out, _ = model(t_input, calc_scores=False)
     t_scores = target_domain_scoring(t_embeddings)

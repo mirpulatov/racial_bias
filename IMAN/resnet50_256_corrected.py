@@ -169,7 +169,7 @@ class Resnet50_256(nn.Module):
         self.feat_extract = nn.Conv2d(2048, 256, kernel_size=[1, 1], stride=(1, 1))
         self.classifier_8631_f = nn.Conv2d(256, 8631, kernel_size=[1, 1], stride=(1, 1))
 
-    def forward(self, data, calc_scores=True):
+    def forward(self, data, target=None, calc_scores=False):
         conv1_7x7_s2 = self.conv1_7x7_s2(data)
         conv1_7x7_s2_bn = self.conv1_7x7_s2_bn(conv1_7x7_s2)
         conv1_7x7_s2_bnxx = self.conv1_relu_7x7_s2(conv1_7x7_s2_bn)
