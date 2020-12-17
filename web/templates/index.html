@@ -1,0 +1,82 @@
+<html>
+<head>
+    <title>Item Details</title>
+    <link href="{{ url_for('static', path='/css/style.css') }}" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', path='/js/app.js') }}"></script>
+</head>
+<body>
+    <header>
+        <div class="header">
+            <div class="container">
+                <div class="project-name">Результат сравнения - отнормированная косинусная близость</div>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <form enctype="multipart/form-data" method="post" action="/process">
+            <div class="inside-container">
+                <div class="container-title">
+                        <span>Загрузите изображения или выберите из <span class="gallery">галереи</span></span>
+                    <span class="options">
+                        <input type="checkbox" id="random-chose">
+                        Использовать случайный пример похожих людей
+                    </span>
+                </div>
+                <div class="images-item">
+                    <div class="images-preview">
+                          <img width="100%" height="100%" id="first_preview" src="{{ url_for('static', path='/images/nopreview.png') }}" />
+                    </div>
+                    <div class="file-container">
+                        <input required type="file" class="images-input" name="first_image" id="first_image" preview="first_preview">
+                        <input type="text" value="None" name="server_image_1" id="server_image_0" hidden>
+                    </div>
+                </div>
+
+                <div class="images-item">
+                    <div class="images-preview">
+                        <img width="100%" height="100%" id="second_preview" src="{{ url_for('static', path='/images/nopreview.png') }}" />
+                    </div>
+                    <div class="file-container">
+                        <input required type="file" class="images-input" name="second_image" id="second_image" preview="second_preview">
+                        <input type="text" value="None" name="server_image_2" id="server_image_1" hidden>
+                    </div>
+                </div>
+            </div>
+
+            <div class="inside-container">
+                <div class="container-title">Выберите модели</div>
+                {% for id, name in nn.items() %}
+                    <div class="nn-item">
+                        <div class="nn-content">
+                            <input required type="checkbox" checked name="models" value="{{ id }}" class="nn-checkbox">
+                            <label>{{ name }}</label>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="inside-container">
+                <div class="container-title">Отправьте на обработку</div>
+                <input type="submit" class="submit">
+            </div>
+        </form>
+
+        <div class="popup-container">
+            <div class="close">X</div>
+            <div class="container-title">Галерея</div>
+            <div class="popup-content">
+                {% for images in gallery%}
+                <div class="gallery-item">
+                    {% for image in images %}
+                    <div server_image="{{image.server}}">
+                        <img width="100%" height="100%" id="second_preview" src="{{ image.web }}" />
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
